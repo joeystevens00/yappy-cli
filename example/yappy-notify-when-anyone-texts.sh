@@ -1,6 +1,6 @@
 #!/bin/bash
 # AUTHOR: Joey Stevens
-# File: yappy-notify-when-person-texts.sh
+# File: yappy-notify-when-anyone-texts.sh
 # Description: This script uses yappy-cli.sh to demonstrate how to monitor
 #	       for unread text messages from anyone
 # Limitations: Two text messages in a 5 second period of time will likely blow the script up
