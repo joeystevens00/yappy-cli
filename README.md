@@ -21,3 +21,10 @@ e.g: yappy-cli.sh --get=checkunread --conversation=conversationId --device=devic
                                         Options: contacts, user, conversations, checkunread, conversation
                                         Always required
 ```
+
+## get flag options
+
+Options: contacts, user, conversations, checkunread, conversation
+
+# contacts
+Returns a list of contacts belonging to the device. See (get-contacts)[http://docs.yappy.im/contact#getContacts]
