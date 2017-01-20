@@ -17,10 +17,10 @@ default_vars() {
 	if [ -z "$results" ]; then results=200; fi
 
 	ENDPOINT="https://api.yappy.im/v1"
-	ENDPOINT_DEVICES="$ENDPOINT/devices"
-	ENDPOINT_CONVERSATIONS="$ENDPOINT_DEVICES/$deviceIdentifier/conversations?page=$page&results=$results"
+	ENDPOINT_DEVICES="$ENDPOINT/devices?modified_after=$modifiedAfter"
+	ENDPOINT_CONVERSATIONS="$ENDPOINT/devices/$deviceIdentifier/conversations?page=$page&results=$results&modified_after=$modifiedAfter"
 	ENDPOINT_USER="$ENDPOINT/users/me"
-	ENDPOINT_CONTACTS="$ENDPOINT_DEVICES/$deviceIdentifier/contacts?page=$page&results=$results"
+	ENDPOINT_CONTACTS="$ENDPOINT/devices/$deviceIdentifier/contacts?page=$page&results=$results&modified_after=$modifiedAfter"
 
 }
 
@@ -82,8 +82,10 @@ e.g: $0 --get=checkunread --conversation=conversationId --device=deviceId --toke
 	-r | --results		determines the amount of data to return
 					defaults to 200
 	-g | --get		Configures the call to use
-					Options: contacts, user, conversations, checkunread, conversation
+					Options: contacts, user, conversations, checkunread, conversation, devices
 					Always required
+	-m | --modified	only returns data that was modified after [unix timestamp]
+					can be used with contacts, conversation, conversations, and devices
 helpcontent
 exit 1
 }
@@ -130,7 +132,10 @@ argParse() {
             get="${i#*=}"
             shift # past argument=value
             ;;
-
+        -m=*|--modified=*)
+            modifiedAfter="${i#*=}"
+            shift # past argument=value
+            ;;
     	-h|--help)
     		help=true
     		shift # past argument with no value
@@ -158,6 +163,8 @@ argParse() {
 		getContacts
     elif [ "$get" == "user" ]; then
         getUser
+    elif [ "$get" == "devices" ]; then
+        getDevices
     elif [ "$get" == "conversations" ]; then
 		isDeviceIdentifierEmpty
         getConversations
