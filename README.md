@@ -5,8 +5,8 @@ yappy-cli is a bash CLI to the Yappy.im API
 ## Usage
 
 ```
-yappy-cli.sh --get=[option] --token=[apiToken] [--flag=[options]]
-e.g: yappy-cli.sh --get=checkunread --conversation=conversationId --device=deviceId --token=apiToken
+/usr/bin/yappy-cli.sh --get=[option] --token=[apiToken] [--flag=[options]]
+e.g: /usr/bin/yappy-cli.sh --get=checkunread --conversation=conversationId --device=deviceId --token=apiToken
 
         -t |--token             the api token to use
         -d |--device            the device identifier to use
@@ -18,8 +18,10 @@ e.g: yappy-cli.sh --get=checkunread --conversation=conversationId --device=devic
         -r | --results          determines the amount of data to return
                                         defaults to 200
         -g | --get              Configures the call to use
-                                        Options: contacts, user, conversations, checkunread, conversation
+                                        Options: contacts, user, conversations, checkunread, conversation, devices
                                         Always required
+        -m | --modified only returns data that was modified after [unix timestamp]
+                                        can be used with contacts, conversation, conversations, and devices
 ```
 
 ## get flag options
