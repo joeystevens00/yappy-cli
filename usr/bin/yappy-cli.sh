@@ -109,40 +109,40 @@ argParse() {
 		-t=*|--token=*)
 			apiToken="${i#*=}"
 			shift # past argument=value
-             		;;
+             ;;
 		-d=*|--device=*)
-    			deviceIdentifier="${i#*=}"
-    			shift # past argument=value
-    			;;
-    		-c=*|--conversation=*)
-    			conversationIdentifier="${i#*=}"
-    			shift # past argument=value
-    			;;
-                -p=*|--page=*)
-                        page="${i#*=}"
-                        shift # past argument=value
-                        ;;
-                -r=*|--results=*)
-                        results="${i#*=}"
-                        shift # past argument=value
-                        ;;
-                -g=*|--get=*)
-                        get="${i#*=}"
-                        shift # past argument=value
-                        ;;
+    		deviceIdentifier="${i#*=}"
+    		shift # past argument=value
+    		;;
+    	-c=*|--conversation=*)
+    		conversationIdentifier="${i#*=}"
+    		shift # past argument=value
+    		;;
+        -p=*|--page=*)
+            page="${i#*=}"
+            shift # past argument=value
+        	;;
+        -r=*|--results=*)
+            results="${i#*=}"
+            shift # past argument=value
+            ;;
+        -g=*|--get=*)
+            get="${i#*=}"
+            shift # past argument=value
+            ;;
 
-    		-h|--help)
-    			help=true
-    			shift # past argument with no value
-    			;;
-    		*)
-	            	help=true # unknown option
-    			;;
+    	-h|--help)
+    		help=true
+    		shift # past argument with no value
+    		;;
+    	*)
+	       	help=true # unknown option
+    		;;
 	esac
 	done
 
 	default_vars
-	if [ -z "$1" ]; then help=true; fi
+
 	if [ "$help" == true ]; then displayHelp; fi
 
 	# If the user didnt pass a token and they didnt hardcode one... 
@@ -173,5 +173,6 @@ argParse() {
 		displayHelp
         fi
 }
+if [ -z "$1" ]; then help=true; fi
 
 argParse "$@"
