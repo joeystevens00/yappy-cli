@@ -1,4 +1,4 @@
-## yappy-cli
+# yappy-cli
 
 yappy-cli is a bash CLI to the Yappy.im API
 
