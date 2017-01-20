@@ -41,12 +41,18 @@ getDevices() {
 	auth_req  $ENDPOINT_DEVICES
 }
 
-checkUnread() {
-	# Consumes the conversation object and returns the unread count for [identifier] of the conversation
-	# Returns { "unread" : "$unreadCount", "contact_name", "$contact_name" } 
-
+getSingleConversation() {
+	# Consumes the conversations object and returns the [identifier] conversation
 	conversations=$(getConversations)
 	conversation=$(echo -e "$conversations" | jq ".conversations | .[] | select(.identifier==\"$conversationIdentifier\")")
+	echo -e "$conversation"
+}
+
+checkUnread() {
+	# Consumes the conversations object and returns the unread count for [identifier] of the conversation
+	# Returns { "unread" : "$unreadCount", "contact_name", "$contact_name" } 
+
+	conversation=$(getSingleConversation)
 	contact_name=$(echo -e "$conversation" | jq ".recipients | .[] | .contact_name")
 	unreadCount=$(echo -e "$conversation" | jq .unread_SMS_count)
 	echo -e "{\"unread\": \"$unreadCount\", \"contact_name\": $contact_name}"
@@ -76,13 +82,13 @@ e.g: $0 --get=checkunread --conversation=conversationId --device=deviceId --toke
 	-d |--device		the device identifier to use
 					required for get-conversations and get-contacts 
 	-c | --conversation	the conversation identifier to use
-					required for checkunread
+					required for checkunread and conversation
 	-p | --page		determines the page to start on
 					defaults to 1
 	-r | --results		determines the amount of data to return
 					defaults to 200
 	-g | --get		Configures the call to use
-					Options: contacts, user, conversations, checkunread
+					Options: contacts, user, conversations, checkunread, conversation
 					Always required
 helpcontent
 exit 1
@@ -149,15 +155,19 @@ argParse() {
 	elif [ "$get" == "contacts" ]; then
 		isDeviceIdentifierEmpty
 		getContacts
-        elif [ "$get" == "user" ]; then
-                 getUser
-        elif [ "$get" == "conversations" ]; then
+    elif [ "$get" == "user" ]; then
+            getUser
+    elif [ "$get" == "conversations" ]; then
 		isDeviceIdentifierEmpty
-                getConversations
-        elif [ "$get" == "checkunread" ]; then
-                isDeviceIdentifierEmpty
+        getConversations
+    elif [ "$get" == "conversation" ]; then
+        isDeviceIdentifierEmpty
 		isConversationIdentifierEmpty
-                checkUnread
+		getSingleConversation
+    elif [ "$get" == "checkunread" ]; then
+        isDeviceIdentifierEmpty
+		isConversationIdentifierEmpty
+        checkUnread
 	else
 		displayHelp
         fi
