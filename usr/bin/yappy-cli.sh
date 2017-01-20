@@ -136,6 +136,10 @@ argParse() {
             modifiedAfter="${i#*=}"
             shift # past argument=value
             ;;
+        -l=*|--lastmodified=*) # Last modified doesn't appear to work right now but i'll leave this for later...
+            last_modified="${i#*=}"
+            shift # past argument=value
+            ;;
     	-h|--help)
     		help=true
     		shift # past argument with no value
