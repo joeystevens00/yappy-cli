@@ -16,12 +16,6 @@ default_vars() {
 	if [ -z "$page" ]; then page=1; fi
 	if [ -z "$results" ]; then results=200; fi
 
-	# If the user didnt pass a token and they didnt hardcode one... 
-	if [ -z "$apiToken" ]; then 
-		echo "Not authenticated. Get an API Token from https://www.yappy.im/web/#Settings"
-		exit 1
-	fi
-
 	ENDPOINT="https://api.yappy.im/v1"
 	ENDPOINT_DEVICES="$ENDPOINT/devices"
 	ENDPOINT_CONVERSATIONS="$ENDPOINT_DEVICES/$deviceIdentifier/conversations?page=$page&results=$results"
@@ -148,7 +142,14 @@ argParse() {
 	done
 
 	default_vars
+	if [ -z "$1" ]; then help=true; fi
+	if [ "$help" == true ]; then displayHelp; fi
 
+	# If the user didnt pass a token and they didnt hardcode one... 
+	if [ -z "$apiToken" ]; then 
+		echo "Not authenticated. Get an API Token from https://www.yappy.im/web/#Settings"
+		exit 1
+	fi
 
 	if [ -z "$get" ]; then 
 		displayHelp
@@ -156,7 +157,7 @@ argParse() {
 		isDeviceIdentifierEmpty
 		getContacts
     elif [ "$get" == "user" ]; then
-            getUser
+        getUser
     elif [ "$get" == "conversations" ]; then
 		isDeviceIdentifierEmpty
         getConversations
@@ -171,10 +172,6 @@ argParse() {
 	else
 		displayHelp
         fi
-
-
-	if [ "$help" == true ]; then displayHelp; fi
-
 }
 
 argParse "$@"
