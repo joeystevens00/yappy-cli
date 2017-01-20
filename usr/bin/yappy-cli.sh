@@ -69,7 +69,7 @@ getContacts() {
 
 displayHelp() {
 cat << helpcontent
-$0 --get=[option] --token=[apiToken] 
+$0 --get=[option] --token=[apiToken] [--flag=[options]]
 e.g: $0 --get=checkunread --conversation=conversationId --device=deviceId --token=apiToken
 
 	-t |--token		the api token to use
