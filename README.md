@@ -40,3 +40,7 @@ Returns a single conversation in the conversations object. The conversation to b
 
 ### checkunread
 Returns the unread_SMS_count and contact_name for the conversation. 
+
+### devices
+Get a list of devices belonging to the current user. See [get-devices](http://docs.yappy.im/device#getDevices) API docs
+
